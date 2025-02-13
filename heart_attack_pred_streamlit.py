@@ -87,6 +87,11 @@ with col2:
     if uploaded_file is not None and uploaded_file != "":
         data = pd.read_csv(uploaded_file)
         data["Gender"].replace({"Male": 1, "Female": 0}, inplace=True)
+        data.replace({"Yes": 1, "No": 0}, inplace=True)
+        data.replace(
+            {"School": 1, "Bachelors": 2, "Masters": 3, "PhD": 4}, inplace=True
+        )
+        data = data.astype("int")
         labels = model.predict(data)
         outcome_mapping = {0: "Healthy", 1: "Not Healthy"}
         data["Predictions"] = [outcome_mapping[label] for label in labels]
